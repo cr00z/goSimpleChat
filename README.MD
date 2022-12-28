@@ -24,23 +24,24 @@
 
 ## Запуск и тест
 
-```go run cmd/server/main.go```
+```bash
+$ go run cmd/server/main.go
 
-```
 2022/12/28 10:13:09 server started
 ```
 
 ### Регистрация
 
-```curl -v -H "Content-Type: application/json" -d '{"username": "test1", "password": "111"}' -XPOST localhost:5000/register```
-
 ```
+$ curl -v -H "Content-Type: application/json" -d '{"username": "test1", "password": "111"}' -XPOST localhost:5000/register
+
 {
  "id": 3
 }
 ```
-```curl -v -H "Content-Type: application/json" -d '{"username": "test2", "password": "111"}' -XPOST localhost:5000/register```
 ```
+$ curl -v -H "Content-Type: application/json" -d '{"username": "test2", "password": "111"}' -XPOST localhost:5000/register
+
 {
  "id": 4
 }
@@ -48,14 +49,16 @@
 
 ### Авторизация
 
-```curl -v -H "Content-Type: application/json" -d '{"username": "test1", "password": "111"}' -XPOST localhost:5000/login```
 ```
+$ curl -v -H "Content-Type: application/json" -d '{"username": "test1", "password": "111"}' -XPOST localhost:5000/login
+
 {
  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIyMDEwNjUsImlhdCI6MTY3MjE5NzQ2NSwiVXNlcklEIjozfQ.L3OUBIS5CGGOX0LrQFs-Zo00dhzLx8mGdib5kaGuhRU"
 }
 ```
-```curl -v -H "Content-Type: application/json" -d '{"username": "test2", "password": "111"}' -XPOST localhost:5000/login```
 ```
+$ curl -v -H "Content-Type: application/json" -d '{"username": "test2", "password": "111"}' -XPOST localhost:5000/login
+
 {
  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIyMDExMTUsImlhdCI6MTY3MjE5NzUxNSwiVXNlcklEIjo0fQ.B3B0Hfq8PCLKzX0ucknC-H--mIOoYPU321pJw5PEsts"
 }
@@ -63,9 +66,9 @@
 
 ### Запрос сообщений чата
 
-```curl -v -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIyMDEwNjUsImlhdCI6MTY3MjE5NzQ2NSwiVXNlcklEIjozfQ.L3OUBIS5CGGOX0LrQFs-Zo00dhzLx8mGdib5kaGuhRU" -XGET localhost:5000/api/messages```
-
 ```
+$ curl -v -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIyMDEwNjUsImlhdCI6MTY3MjE5NzQ2NSwiVXNlcklEIjozfQ.L3OUBIS5CGGOX0LrQFs-Zo00dhzLx8mGdib5kaGuhRU" -XGET localhost:5000/api/messages
+
 [
  {
   "id": 0,
@@ -90,8 +93,9 @@
 
 ### Отправка сообщений в общий чат
 
-```curl -v -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIyMDEwNjUsImlhdCI6MTY3MjE5NzQ2NSwiVXNlcklEIjozfQ.L3OUBIS5CGGOX0LrQFs-Zo00dhzLx8mGdib5kaGuhRU" -d '{"text":"test text"}' -XPOST localhost:5000/api/messages```
 ```
+$ curl -v -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIyMDEwNjUsImlhdCI6MTY3MjE5NzQ2NSwiVXNlcklEIjozfQ.L3OUBIS5CGGOX0LrQFs-Zo00dhzLx8mGdib5kaGuhRU" -d '{"text":"test text"}' -XPOST localhost:5000/api/messages
+
 {
  "status": "ok"
 }
@@ -109,14 +113,15 @@
 
 ### Отправка личных сообщений
 
-```url -v -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIyMDEwNjUsImlhdCI6MTY3MjE5NzQ2NSwiVXNlcklEIjozfQ.L3OUBIS5CGGOX0LrQFs-Zo00dhzLx8mGdib5kaGuhRU" -d '{"to_user":4, "text":"private message1"}' -XPOST localhost:5000/api/users/4/messages```
 ```
+$ url -v -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIyMDEwNjUsImlhdCI6MTY3MjE5NzQ2NSwiVXNlcklEIjozfQ.L3OUBIS5CGGOX0LrQFs-Zo00dhzLx8mGdib5kaGuhRU" -d '{"to_user":4, "text":"private message1"}' -XPOST localhost:5000/api/users/4/messages
+
 {
  "status": "ok"
 }
-```
-```curl -v -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIyMDEwNjUsImlhdCI6MTY3MjE5NzQ2NSwiVXNlcklEIjozfQ.L3OUBIS5CGGOX0LrQFs-Zo00dhzLx8mGdib5kaGuhRU" -d '{"to_user":4, "text":"private message2"}' -XPOST localhost:5000/api/users/4/messages```
-```
+
+$ curl -v -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIyMDEwNjUsImlhdCI6MTY3MjE5NzQ2NSwiVXNlcklEIjozfQ.L3OUBIS5CGGOX0LrQFs-Zo00dhzLx8mGdib5kaGuhRU" -d '{"to_user":4, "text":"private message2"}' -XPOST localhost:5000/api/users/4/messages
+
 {
  "status": "ok"
 }
@@ -124,8 +129,9 @@
 
 ### Получение личных сообщений
 
-```curl -v -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIyMDExMTUsImlhdCI6MTY3MjE5NzUxNSwiVXNlcklEIjo0fQ.B3B0Hfq8PCLKzX0ucknC-H--mIOoYPU321pJw5PEsts" -XGET localhost:5000/api/users/me/messages```
 ```
+$ curl -v -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIyMDExMTUsImlhdCI6MTY3MjE5NzUxNSwiVXNlcklEIjo0fQ.B3B0Hfq8PCLKzX0ucknC-H--mIOoYPU321pJw5PEsts" -XGET localhost:5000/api/users/me/messages
+
 [
  {
   "id": 6,
