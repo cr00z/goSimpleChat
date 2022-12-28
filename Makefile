@@ -24,11 +24,17 @@ test:
 lint: install-lint
 	${LINTBIN} run	
 
-run: build
+run: swagger build
 	${BINDIR}/server
 
 generate: install-mockgen
 	${MOCKGEN} -source=internal/model/messages/incoming_msg.go -destination=internal/mocks/messages/messages_mocks.go
+
+swagger:
+# export PATH=$PATH:$HOME/go/bin
+# go install github.com/swaggo/swag/cmd/swag
+	go get -u github.com/swaggo/swag/cmd/swag
+	swag init -g cmd/server/main.go
 
 # service
 

@@ -1,0 +1,212 @@
+basePath: /
+definitions:
+  domain.Message:
+    properties:
+      from_user:
+        type: integer
+      id:
+        type: integer
+      text:
+        type: string
+      to_user:
+        type: integer
+    type: object
+  domain.User:
+    properties:
+      _:
+        type: integer
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  handler.ResponseOK:
+    properties:
+      id:
+        type: integer
+    type: object
+  handler.ResponseStatus:
+    properties:
+      status:
+        type: string
+    type: object
+  handler.ResponseToken:
+    properties:
+      token:
+        type: string
+    type: object
+host: localhost:5000
+info:
+  contact:
+    email: netrebinr@gmail.com
+    name: '@imcr00z'
+  description: Simple Chat API Backend (Golang)
+  title: Simple Chat API
+  version: 1.0.0
+paths:
+  /api/messages:
+    get:
+      description: Get messages from chat
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Message'
+            type: array
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      security:
+      - ApiKeyAuth: []
+      summary: Get messages
+      tags:
+      - Message
+    post:
+      consumes:
+      - application/json
+      description: Post message from user to chat
+      parameters:
+      - description: text only
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Message'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ResponseStatus'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      security:
+      - ApiKeyAuth: []
+      summary: Post message
+      tags:
+      - Message
+  /api/users/{id}/messages:
+    post:
+      consumes:
+      - application/json
+      description: Send private message from one user to another
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: to_user and text only
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Message'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ResponseStatus'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      security:
+      - ApiKeyAuth: []
+      summary: Send private message
+      tags:
+      - Message
+  /api/users/me/messages:
+    get:
+      description: Get your private messages
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Message'
+            type: array
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      security:
+      - ApiKeyAuth: []
+      summary: Get private messages
+      tags:
+      - Message
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Login to account
+      parameters:
+      - description: account info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ResponseToken'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      summary: Login
+      tags:
+      - Auth
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Create account
+      parameters:
+      - description: account info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ResponseOK'
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Register
+      tags:
+      - Auth
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
