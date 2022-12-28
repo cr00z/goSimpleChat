@@ -16,11 +16,13 @@
 - возможность безболезненно переключить хранение данных на другой тип, например DB
 - документация ручек
 
-# Swagger
+# Решение
+
+## Swagger
 
 ![swagger](images/swagger.png)
 
-# Запуск
+## Запуск и тест
 
 ```go run cmd/server/main.go```
 
@@ -28,7 +30,7 @@
 2022/12/28 10:13:09 server started
 ```
 
-## Регистрация
+### Регистрация
 
 ```curl -v -H "Content-Type: application/json" -d '{"username": "test1", "password": "111"}' -XPOST localhost:5000/register```
 
@@ -44,7 +46,7 @@
 }
 ```
 
-## Авторизация
+### Авторизация
 
 ```curl -v -H "Content-Type: application/json" -d '{"username": "test1", "password": "111"}' -XPOST localhost:5000/login```
 ```
@@ -59,7 +61,7 @@
 }
 ```
 
-## Запрос сообщений чата
+### Запрос сообщений чата
 
 ```curl -v -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIyMDEwNjUsImlhdCI6MTY3MjE5NzQ2NSwiVXNlcklEIjozfQ.L3OUBIS5CGGOX0LrQFs-Zo00dhzLx8mGdib5kaGuhRU" -XGET localhost:5000/api/messages```
 
@@ -86,7 +88,7 @@
 ]
 ```
 
-## Отправка сообщений в общий чат
+### Отправка сообщений в общий чат
 
 ```curl -v -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIyMDEwNjUsImlhdCI6MTY3MjE5NzQ2NSwiVXNlcklEIjozfQ.L3OUBIS5CGGOX0LrQFs-Zo00dhzLx8mGdib5kaGuhRU" -d '{"text":"test text"}' -XPOST localhost:5000/api/messages```
 ```
@@ -105,7 +107,7 @@
 ]
 ```
 
-## Отправка личных сообщений
+### Отправка личных сообщений
 
 ```url -v -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIyMDEwNjUsImlhdCI6MTY3MjE5NzQ2NSwiVXNlcklEIjozfQ.L3OUBIS5CGGOX0LrQFs-Zo00dhzLx8mGdib5kaGuhRU" -d '{"to_user":4, "text":"private message1"}' -XPOST localhost:5000/api/users/4/messages```
 ```
@@ -120,7 +122,7 @@
 }
 ```
 
-## Получение личных сообщений
+### Получение личных сообщений
 
 ```curl -v -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIyMDExMTUsImlhdCI6MTY3MjE5NzUxNSwiVXNlcklEIjo0fQ.B3B0Hfq8PCLKzX0ucknC-H--mIOoYPU321pJw5PEsts" -XGET localhost:5000/api/users/me/messages```
 ```
